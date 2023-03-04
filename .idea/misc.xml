@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/drawable/colorwheel.xml" value="0.1405" />
+        <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/drawable/ic_color_picker_pipette.xml" value="0.1" />
         <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/layout/fragment_new_task_sheet.xml" value="0.22" />
       </map>

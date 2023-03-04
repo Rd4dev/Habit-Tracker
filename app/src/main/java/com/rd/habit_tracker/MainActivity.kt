@@ -19,17 +19,7 @@ class MainActivity : AppCompatActivity() {
         taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         var newTaskButton = findViewById<Button>(R.id.newTaskButton)
         newTaskButton.setOnClickListener {
-            NewTaskSheet().show(supportFragmentManager, "newTaskTag")
+            NewTaskSheet(null).show(supportFragmentManager, "newTaskTag")
         }
-
-        taskViewModel.name.observe(this){
-            var taskName = findViewById<TextView>(R.id.taskName)
-            taskName.text = String.format("Task Name: %s", it)
-        }
-        taskViewModel.desc.observe(this){
-            var taskDesc = findViewById<TextView>(R.id.taskDesc)
-            taskDesc.text = String.format("Task Desc: %s", it)
-        }
-
     }
 }
