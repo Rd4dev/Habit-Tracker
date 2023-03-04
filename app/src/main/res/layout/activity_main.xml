@@ -10,18 +10,19 @@
         android:id="@+id/todoListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:backgroundTint="#DBDBDB"/>
+        app:backgroundTint="#DBDBDB" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <Button
         android:id="@+id/newTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Task"
         android:textAlignment="center"
-        app:backgroundTint="#C1F99D"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/green"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:padding="5dp"
+        android:padding="10dp"
         android:layout_margin="20dp"/>
 
 

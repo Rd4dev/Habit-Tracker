@@ -1,5 +1,7 @@
 package com.rd.habit_tracker
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.time.LocalDate
@@ -28,6 +30,7 @@ class TaskViewModel: ViewModel() {
         taskItems.postValue(list)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun setCompleted(taskItem: TaskItem){
         val list = taskItems.value
         val task = list!!.find { it.id == taskItem.id}!!
