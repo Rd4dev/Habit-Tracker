@@ -1,10 +1,13 @@
 package com.rd.habit_tracker
 
+import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.GridLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -54,6 +57,29 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
         heatMap.data(data)
 
         anyChartView.setChart(heatMap)*/
+
+        val colors = arrayOf(
+            Color.parseColor("#A5BB74"),
+            Color.parseColor("#C3DD87"),
+            Color.parseColor("#D7F492"),
+            Color.parseColor("#C7C7C7")
+        )
+
+        for (i in 0 until 4) {
+            for (j in 0 until 7) {
+                val box = View(this)
+                box.setBackgroundColor(colors[i])
+                val params = GridLayout.LayoutParams(
+                    GridLayout.spec(i, 1f),
+                    GridLayout.spec(j, 1f)
+                )
+                params.width = 0
+                params.height = 0
+                params.setMargins(4, 4, 4, 4)
+                val heatMap = findViewById<GridLayout>(R.id.heatMap)
+                heatMap.addView(box, params)
+            }
+        }
 
     }
 
