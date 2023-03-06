@@ -44,9 +44,9 @@ class TaskItemViewHolder(
             clickListener.completeTaskItem(taskItem)
         }
 
-        if (taskItem.dueTime != null){
+        if (taskItem.dueTime() != null){
             val dueTime = itemView.findViewById<TextView>(R.id.dueTime)
-            dueTime.text = timeFormat.format(taskItem.dueTime)
+            dueTime.text = timeFormat.format(taskItem.dueTime())
         }else{
             val dueTime = itemView.findViewById<TextView>(R.id.dueTime)
             dueTime.text = ""

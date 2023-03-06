@@ -35,8 +35,8 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
             val desc = view.findViewById<TextView>(R.id.description)
             desc.text = editable.newEditable(taskItem!!.desc)
 
-            if(taskItem!!.dueTime != null){
-                dueTime = taskItem!!.dueTime!!
+            if(taskItem!!.dueTime() != null){
+                dueTime = taskItem!!.dueTime()
                 updateTimeButtonText()
             }
 
@@ -80,14 +80,20 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         return inflater.inflate(R.layout.fragment_new_task_sheet, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun saveAction(){
         val name = view?.findViewById<TextView>(R.id.name)?.text.toString()
         val desc = view?.findViewById<TextView>(R.id.description)?.text.toString()
+        val dueTimeString = if(dueTime == null) null else TaskItem.timeFormatter.format(dueTime)
         if(taskItem == null){
-            val newTask = TaskItem(name, desc, dueTime, null)
+            val newTask = TaskItem(name, desc, dueTimeString, null)
             taskViewModel.addTaskItem(newTask)
         }else{
-            taskViewModel.updateTaskItem(taskItem!!.id, name, desc, dueTime)
+            taskItem!!.name = name
+            taskItem!!.desc = desc
+            taskItem!!.dueTimeString = dueTimeString
+
+            taskViewModel.updateTaskItem(taskItem!!)
         }
         view?.findViewById<TextView>(R.id.name)?.text = ""
         view?.findViewById<TextView>(R.id.description)?.text = ""
