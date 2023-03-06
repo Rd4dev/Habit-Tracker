@@ -11,7 +11,13 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+/*import com.anychart.AnyChart
+import com.anychart.AnyChartView
+import com.anychart.chart.common.dataentry.DataEntry
+import com.anychart.chart.common.dataentry.ValueDataEntry*/
 import com.google.android.material.textfield.TextInputEditText
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), TaskItemClickListener {
 
@@ -32,6 +38,23 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
         }
 
         setRecyclerView()
+
+        /*val anyChartView = findViewById<AnyChartView>(R.id.chart_view)
+
+        val heatMap = AnyChart.heatMap()
+        val data = ArrayList<DataEntry>()
+
+        for(i in 0 until 30){
+            for(j in 0 until 7){
+                val value = Random().nextInt(5)
+                data.add(ValueDataEntry("$i"+"$j",value))
+            }
+        }
+
+        heatMap.data(data)
+
+        anyChartView.setChart(heatMap)*/
+
     }
 
     private fun setRecyclerView(){
