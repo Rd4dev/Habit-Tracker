@@ -59,10 +59,10 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
         anyChartView.setChart(heatMap)*/
 
         val colors = arrayOf(
-            Color.parseColor("#A5BB74"),
-            Color.parseColor("#C3DD87"),
-            Color.parseColor("#D7F492"),
-            Color.parseColor("#C7C7C7")
+            Color.parseColor("#30A14E"),
+            Color.parseColor("#40C463"),
+            Color.parseColor("#9BE9A8"),
+            Color.parseColor("#EAECEF")
         )
 
         for (i in 0 until 4) {
