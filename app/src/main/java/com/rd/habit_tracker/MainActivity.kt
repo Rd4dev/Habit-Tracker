@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -22,6 +23,7 @@ import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry*/
 import com.google.android.material.textfield.TextInputEditText
+import org.w3c.dom.Text
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.log
@@ -81,7 +83,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
 
         for (i in 0 until 4) {
             for (j in 0 until 7) {
-                val box = View(this)
+                val box = TextView(this)
                 val r = Random().nextInt(4)
                 box.setBackgroundResource(R.drawable.grid_background)
 
@@ -102,6 +104,9 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
                 params.setMargins(10, 10, 10, 10)
                 val heatMap = findViewById<GridLayout>(R.id.heatMap)
                 heatMap.addView(box, params)
+
+                box.text = "${i * 7 + j + 1}"
+                box.gravity = Gravity.CENTER
             }
         }
 
