@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
@@ -24,6 +25,8 @@ import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry*/
 import com.google.android.material.textfield.TextInputEditText
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.time.YearMonth
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.log
@@ -34,6 +37,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
         TaskItemModelFactory((application as TodoApplication).repository)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -80,6 +84,23 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
         shape.cornerRadius = 5.dpToPx()*/
 //        shape.setColor(ContextCompat.getColor(this, colors2[2])) // set desired color here
 
+        //current month
+        val date = Date()
+        val month = SimpleDateFormat("MMMM").format(date)
+
+        //set current month name
+        val monthText = findViewById<TextView>(R.id.tv_month)
+        monthText.text = month
+
+        //get number of days in current year and current month
+        val calender = Calendar.getInstance()
+        val currentYear = calender.get(Calendar.YEAR)
+        //month indexed from 0
+        val currentMonth = calender.get(Calendar.MONTH)
+        val accurateCurrentMonth = currentMonth+1
+        val yearMonth = YearMonth.of(currentYear, accurateCurrentMonth)
+        val daysInMonth = yearMonth.lengthOfMonth()
+        Log.d("days", "onCreate: days in Month - Month: $accurateCurrentMonth, Year: $yearMonth, days: $daysInMonth")
 
         for (i in 0 until 4) {
             for (j in 0 until 7) {
