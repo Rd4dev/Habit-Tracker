@@ -30,8 +30,7 @@ import kotlin.math.log
 
 class MainActivity : AppCompatActivity(), TaskItemClickListener {
 
-
-    val colors2 = intArrayOf(
+    private val colors2 = intArrayOf(
         R.color.green_700, R.color.green_500, R.color.green_200, R.color.grey_200
     )
 
@@ -46,41 +45,12 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
 
         supportActionBar?.hide()
 
-//        taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         var newTaskButton = findViewById<Button>(R.id.newTaskButton)
         newTaskButton.setOnClickListener {
             NewTaskSheet(null).show(supportFragmentManager, "newTaskTag")
         }
 
         setRecyclerView()
-
-        /*val anyChartView = findViewById<AnyChartView>(R.id.chart_view)
-
-        val heatMap = AnyChart.heatMap()
-        val data = ArrayList<DataEntry>()
-
-        for(i in 0 until 30){
-            for(j in 0 until 7){
-                val value = Random().nextInt(5)
-                data.add(ValueDataEntry("$i"+"$j",value))
-            }
-        }
-
-        heatMap.data(data)
-
-        anyChartView.setChart(heatMap)*/
-
-        val colors = arrayOf(
-            Color.parseColor("#30A14E"),
-            Color.parseColor("#40C463"),
-            Color.parseColor("#9BE9A8"),
-            Color.parseColor("#EAECEF")
-        )
-
-        /*val shape = GradientDrawable()
-        shape.shape = GradientDrawable.RECTANGLE
-        shape.cornerRadius = 5.dpToPx()*/
-//        shape.setColor(ContextCompat.getColor(this, colors2[2])) // set desired color here
 
         //current month
         val date = Date()
@@ -92,50 +62,12 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
 
         //get number of days in current year and current month
         val calender = Calendar.getInstance()
-        val currentYear = calender.get(Calendar.YEAR)
+
         //month indexed from 0
         val currentMonth = calender.get(Calendar.MONTH)
-        var accurateCurrentMonth = currentMonth+1
-        val yearMonth = YearMonth.of(currentYear, accurateCurrentMonth)
-        val daysInMonth = yearMonth.lengthOfMonth()
-        Log.d("days", "onCreate: days in Month - Month: $accurateCurrentMonth, Year: $yearMonth, days: $daysInMonth")
+        var accurateCurrentMonth = currentMonth + 1
 
-        for (i in 0 until 5) {
-            for (j in 0 until 7) {
-                val box = TextView(this)
-                val r = Random().nextInt(4)
-
-//                if((i * 7 + j + 1) <= daysInMonth) {
-//                    box.setBackgroundResource(R.drawable.grid_background)
-//                } else {
-                    box.setBackgroundResource(R.drawable.ic_baseline_texture_24)
-//                }
-
-
-                val shape = GradientDrawable()
-                shape.shape = GradientDrawable.RECTANGLE
-                shape.cornerRadius = 5.dpToPx()
-                shape.setColor(ContextCompat.getColor(this, colors2[r]))
-                // set desired color here
-                if ((i * 7 + j + 1) <= daysInMonth) {
-                    box.background = shape
-                    box.text = "${i * 7 + j + 1}"
-                    box.gravity = Gravity.CENTER
-                }
-
-//                box.setBackgroundColor(colors[r])
-                val params = GridLayout.LayoutParams(
-                    GridLayout.spec(i, 1f),
-                    GridLayout.spec(j, 1f)
-                )
-                params.width = 0
-                params.height = 0
-                params.setMargins(10, 10, 10, 10)
-                val heatMap = findViewById<GridLayout>(R.id.heatMap)
-                heatMap.addView(box, params)
-
-            }
-        }
+        loadMonth(accurateCurrentMonth)
 
         val nextMonthBtn = findViewById<ImageView>(R.id.nextMonth)
         nextMonthBtn.setOnClickListener {
@@ -179,12 +111,7 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
                 val box = TextView(this)
                 val r = Random().nextInt(4)
 
-//                if((i * 7 + j + 1) <= daysInMonth) {
-//                    box.setBackgroundResource(R.drawable.grid_background)
-//                } else {
                 box.setBackgroundResource(R.drawable.ic_baseline_texture_24)
-//                }
-
 
                 val shape = GradientDrawable()
                 shape.shape = GradientDrawable.RECTANGLE
@@ -197,7 +124,6 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
                     box.gravity = Gravity.CENTER
                 }
 
-//                box.setBackgroundColor(colors[r])
                 val params = GridLayout.LayoutParams(
                     GridLayout.spec(i, 1f),
                     GridLayout.spec(j, 1f)
@@ -207,10 +133,8 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
                 params.setMargins(10, 10, 10, 10)
 
                 heatMap.addView(box, params)
-
             }
         }
-
     }
 
     private fun setRecyclerView(){
@@ -236,5 +160,5 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
 
 fun Int.dpToPx(): Float {
     val scale = Resources.getSystem().displayMetrics.density
-    return (this * scale + 0.5f).toFloat()
+    return (this * scale + 0.5f)
 }
