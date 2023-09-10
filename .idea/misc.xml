@@ -5,8 +5,9 @@
       <map>
         <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/drawable/colorwheel.xml" value="0.1405" />
         <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/drawable/grid_background.xml" value="0.1" />
+        <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/drawable/ic_baseline_texture_24.xml" value="0.3565" />
         <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/drawable/ic_color_picker_pipette.xml" value="0.1" />
-        <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/layout/fragment_new_task_sheet.xml" value="0.22" />
         <entry key="..\:/Users/Baskaran/AndroidStudioProjects/HabitTracker/app/src/main/res/layout/task_item_cell.xml" value="0.22" />
       </map>

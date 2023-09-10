@@ -9,10 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.GridLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -97,23 +94,33 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
         val currentYear = calender.get(Calendar.YEAR)
         //month indexed from 0
         val currentMonth = calender.get(Calendar.MONTH)
-        val accurateCurrentMonth = currentMonth+1
+        var accurateCurrentMonth = currentMonth+1
         val yearMonth = YearMonth.of(currentYear, accurateCurrentMonth)
         val daysInMonth = yearMonth.lengthOfMonth()
         Log.d("days", "onCreate: days in Month - Month: $accurateCurrentMonth, Year: $yearMonth, days: $daysInMonth")
 
-        for (i in 0 until 4) {
+        for (i in 0 until 5) {
             for (j in 0 until 7) {
                 val box = TextView(this)
                 val r = Random().nextInt(4)
-                box.setBackgroundResource(R.drawable.grid_background)
+
+//                if((i * 7 + j + 1) <= daysInMonth) {
+//                    box.setBackgroundResource(R.drawable.grid_background)
+//                } else {
+                    box.setBackgroundResource(R.drawable.ic_baseline_texture_24)
+//                }
+
 
                 val shape = GradientDrawable()
                 shape.shape = GradientDrawable.RECTANGLE
                 shape.cornerRadius = 5.dpToPx()
-                shape.setColor(ContextCompat.getColor(this, colors2[r])) // set desired color here
-
-                box.background = shape
+                shape.setColor(ContextCompat.getColor(this, colors2[r]))
+                // set desired color here
+                if ((i * 7 + j + 1) <= daysInMonth) {
+                    box.background = shape
+                    box.text = "${i * 7 + j + 1}"
+                    box.gravity = Gravity.CENTER
+                }
 
 //                box.setBackgroundColor(colors[r])
                 val params = GridLayout.LayoutParams(
@@ -126,11 +133,26 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
                 val heatMap = findViewById<GridLayout>(R.id.heatMap)
                 heatMap.addView(box, params)
 
-                box.text = "${i * 7 + j + 1}"
-                box.gravity = Gravity.CENTER
             }
         }
 
+        val nextMonthBtn = findViewById<ImageView>(R.id.nextMonth)
+        nextMonthBtn.setOnClickListener {
+            loadMonth(accurateCurrentMonth+1)
+            accurateCurrentMonth += 1
+        }
+
+        val prevMonthBtn = findViewById<ImageView>(R.id.prevMonth)
+        prevMonthBtn.setOnClickListener {
+            loadMonth(accurateCurrentMonth-1)
+            accurateCurrentMonth -= 1
+        }
+
+    }
+
+    private fun loadMonth(month: Int) {
+        val monthText = findViewById<TextView>(R.id.tv_month)
+        monthText.text = getMonthName(month)
     }
 
     private fun setRecyclerView(){
