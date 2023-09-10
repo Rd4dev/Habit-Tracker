@@ -30,6 +30,11 @@ import kotlin.math.log
 
 class MainActivity : AppCompatActivity(), TaskItemClickListener {
 
+
+    val colors2 = intArrayOf(
+        R.color.green_700, R.color.green_500, R.color.green_200, R.color.grey_200
+    )
+
     private val taskViewModel: TaskViewModel by viewModels {
         TaskItemModelFactory((application as TodoApplication).repository)
     }
@@ -70,10 +75,6 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
             Color.parseColor("#40C463"),
             Color.parseColor("#9BE9A8"),
             Color.parseColor("#EAECEF")
-        )
-
-        val colors2 = intArrayOf(
-            R.color.green_700, R.color.green_500, R.color.green_200, R.color.grey_200
         )
 
         /*val shape = GradientDrawable()
@@ -138,21 +139,78 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
 
         val nextMonthBtn = findViewById<ImageView>(R.id.nextMonth)
         nextMonthBtn.setOnClickListener {
-            loadMonth(accurateCurrentMonth+1)
-            accurateCurrentMonth += 1
+            if (accurateCurrentMonth != 12) {
+                loadMonth(accurateCurrentMonth + 1)
+                accurateCurrentMonth += 1
+            } else {
+                accurateCurrentMonth = 1
+                loadMonth(accurateCurrentMonth)
+            }
         }
 
         val prevMonthBtn = findViewById<ImageView>(R.id.prevMonth)
         prevMonthBtn.setOnClickListener {
-            loadMonth(accurateCurrentMonth-1)
-            accurateCurrentMonth -= 1
+            if (accurateCurrentMonth != 1) {
+                loadMonth(accurateCurrentMonth - 1)
+                accurateCurrentMonth -= 1
+            } else {
+                accurateCurrentMonth = 12
+                loadMonth(accurateCurrentMonth)
+            }
         }
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun loadMonth(month: Int) {
+        val heatMap = findViewById<GridLayout>(R.id.heatMap)
+        heatMap.removeAllViews()
+
         val monthText = findViewById<TextView>(R.id.tv_month)
         monthText.text = getMonthName(month)
+
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val yearMonth = YearMonth.of(currentYear, month)
+        val daysInMonth = yearMonth.lengthOfMonth()
+
+
+        for (i in 0 until 5) {
+            for (j in 0 until 7) {
+                val box = TextView(this)
+                val r = Random().nextInt(4)
+
+//                if((i * 7 + j + 1) <= daysInMonth) {
+//                    box.setBackgroundResource(R.drawable.grid_background)
+//                } else {
+                box.setBackgroundResource(R.drawable.ic_baseline_texture_24)
+//                }
+
+
+                val shape = GradientDrawable()
+                shape.shape = GradientDrawable.RECTANGLE
+                shape.cornerRadius = 5.dpToPx()
+                shape.setColor(ContextCompat.getColor(this, colors2[r]))
+                // set desired color here
+                if ((i * 7 + j + 1) <= daysInMonth) {
+                    box.background = shape
+                    box.text = "${i * 7 + j + 1}"
+                    box.gravity = Gravity.CENTER
+                }
+
+//                box.setBackgroundColor(colors[r])
+                val params = GridLayout.LayoutParams(
+                    GridLayout.spec(i, 1f),
+                    GridLayout.spec(j, 1f)
+                )
+                params.width = 0
+                params.height = 0
+                params.setMargins(10, 10, 10, 10)
+
+                heatMap.addView(box, params)
+
+            }
+        }
+
     }
 
     private fun setRecyclerView(){
