@@ -7,3 +7,5 @@ A Habit Tracker App with Heat Map
 ## TODO
 TODO: Update HeatMap dynamically based on values
 
+## Design Structure
+<img src="images/design/habittrackerlayout.png"/>
