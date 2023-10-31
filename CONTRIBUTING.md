@@ -7,7 +7,7 @@ If you want to add any feature, feel free to create a issue and once approved st
 - [ ] Add habit duration to new task dialog
 - [ ] Automatically view task based on duration in the list
 - [ ] Make heatmap dynamic with checked values
-- [ ] Checked Values moves to the bottom
+- [x] Checked Values moves to the bottom
 
 ## Inquiries
 Feel free to contact me @rd4ramadevi@gmail.com
