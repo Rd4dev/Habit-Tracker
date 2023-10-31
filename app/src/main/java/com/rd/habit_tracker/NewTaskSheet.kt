@@ -1,20 +1,22 @@
 package com.rd.habit_tracker
 
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
 
@@ -51,10 +53,66 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
             saveAction()
         }
 
-        val timePickerButton = view.findViewById<Button>(R.id.timePickerButton)
-        timePickerButton.setOnClickListener {
-            openTimePicker()
+        val startTimePickerButton = view.findViewById<Button>(R.id.startTimePickerButton)
+        startTimePickerButton.setOnClickListener {
+//            openTimePicker()
+            openStartDatePicker()
         }
+
+        val endTimePickerButton = view.findViewById<Button>(R.id.endTimePickerButton)
+        endTimePickerButton.setOnClickListener {
+            openEndDatePicker()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun openStartDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            val formattedDate = selectedDate.format(formatter)
+
+            updateStartDateButtonText(formattedDate)
+        }, year, month, day)
+
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+        datePickerDialog.setTitle("Select Date")
+        datePickerDialog.show()
+    }
+
+    private fun updateStartDateButtonText(formattedDate: String) {
+        val startDatePickerButton = view?.findViewById<TextView>(R.id.startTimePickerButton)
+        startDatePickerButton?.text = formattedDate
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun openEndDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            val formattedDate = selectedDate.format(formatter)
+
+            updateEndDateButtonText(formattedDate)
+        }, year, month, day)
+
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+        datePickerDialog.setTitle("Select Date")
+        datePickerDialog.show()
+    }
+
+    private fun updateEndDateButtonText(formattedDate: String) {
+        val startDatePickerButton = view?.findViewById<TextView>(R.id.endTimePickerButton)
+        startDatePickerButton?.text = formattedDate
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -72,7 +130,7 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateTimeButtonText() {
-        val timePickerButton = view?.findViewById<TextView>(R.id.timePickerButton)
+        val timePickerButton = view?.findViewById<TextView>(R.id.startTimePickerButton)
         timePickerButton?.text = String.format("%02d:%02d",dueTime!!.hour,dueTime!!.minute)
     }
 
