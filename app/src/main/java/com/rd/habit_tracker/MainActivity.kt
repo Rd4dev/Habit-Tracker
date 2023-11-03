@@ -137,13 +137,16 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setRecyclerView(){
         val mainActivity = this
         taskViewModel.taskItems.observe(this){
             val todoListRecyclerView = findViewById<RecyclerView>(R.id.todoListRecyclerView)
+//            val tasks = todoListRecyclerView.apply { it }
+//            val sortedTasks = todoListRecyclerView.apply { it.sortedBy { !it.isCompleted() } }
             todoListRecyclerView.apply {
                 layoutManager = LinearLayoutManager(applicationContext)
-                adapter = TaskItemAdapter(it, mainActivity)
+                adapter = TaskItemAdapter(it.sortedBy { it.isCompleted() }, mainActivity)
             }
         }
     }
