@@ -21,7 +21,8 @@ import java.util.*
 class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
 
     private lateinit var taskViewModel: TaskViewModel
-    private var dueTime: LocalTime? = null
+    private var startDate: String? = null
+    private var endDate: String? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,10 +38,10 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
             val desc = view.findViewById<TextView>(R.id.description)
             desc.text = editable.newEditable(taskItem!!.desc)
 
-            if(taskItem!!.dueTime() != null){
+            /*if(taskItem!!.dueTime() != null){
                 dueTime = taskItem!!.dueTime()
                 updateTimeButtonText()
-            }
+            }*/
 
         }else{
             var taskTitle = view.findViewById<TextView>(R.id.taskTitle)
@@ -88,6 +89,7 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     private fun updateStartDateButtonText(formattedDate: String) {
         val startDatePickerButton = view?.findViewById<TextView>(R.id.startTimePickerButton)
         startDatePickerButton?.text = formattedDate
+        startDate = formattedDate
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -113,9 +115,10 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     private fun updateEndDateButtonText(formattedDate: String) {
         val startDatePickerButton = view?.findViewById<TextView>(R.id.endTimePickerButton)
         startDatePickerButton?.text = formattedDate
+        endDate = formattedDate
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    /*@RequiresApi(Build.VERSION_CODES.O)
     private fun openTimePicker() {
         if(dueTime == null)
             dueTime = LocalTime.now()
@@ -126,13 +129,13 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         val dialog = TimePickerDialog(activity, listener, dueTime!!.hour, dueTime!!.minute, true)
         dialog.setTitle("Task Due")
         dialog.show()
-    }
+    }*/
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    /*@RequiresApi(Build.VERSION_CODES.O)
     private fun updateTimeButtonText() {
         val timePickerButton = view?.findViewById<TextView>(R.id.startTimePickerButton)
         timePickerButton?.text = String.format("%02d:%02d",dueTime!!.hour,dueTime!!.minute)
-    }
+    }*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_new_task_sheet, container, false)
@@ -142,14 +145,16 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     private fun saveAction(){
         val name = view?.findViewById<TextView>(R.id.name)?.text.toString()
         val desc = view?.findViewById<TextView>(R.id.description)?.text.toString()
-        val dueTimeString = if(dueTime == null) null else TaskItem.timeFormatter.format(dueTime)
+//        val dueTimeString = if(dueTime == null) null else TaskItem.timeFormatter.format(dueTime)
         if(taskItem == null){
-            val newTask = TaskItem(name, desc, dueTimeString, null)
+            val newTask = TaskItem(name, desc, startDate, endDate, null)
             taskViewModel.addTaskItem(newTask)
         }else{
             taskItem!!.name = name
             taskItem!!.desc = desc
-            taskItem!!.dueTimeString = dueTimeString
+//            taskItem!!.dueTimeString = dueTimeString
+            taskItem!!.startDateString = startDate
+            taskItem!!.endDateString = endDate
 
             taskViewModel.updateTaskItem(taskItem!!)
         }

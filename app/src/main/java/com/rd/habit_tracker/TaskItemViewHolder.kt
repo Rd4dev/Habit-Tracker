@@ -24,10 +24,10 @@ class TaskItemViewHolder(
         val name = itemView.findViewById<TextView>(R.id.name)
         name.text = taskItem.name
 
-        val dueTime = itemView.findViewById<TextView>(R.id.dueTime)
+//        val dueTime = itemView.findViewById<TextView>(R.id.dueTime)
         if(taskItem.isCompleted()){
             name.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-            dueTime.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+//            dueTime.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
 
         val cardTaskCell = itemView.findViewById<CardView>(R.id.taskCellContainer)
@@ -44,12 +44,17 @@ class TaskItemViewHolder(
             clickListener.completeTaskItem(taskItem)
         }
 
-        if (taskItem.dueTime() != null){
+        if (taskItem.endDateString != null) {
+            val endDate = itemView.findViewById<TextView>(R.id.endDate)
+            endDate.text = taskItem.endDateString
+        }
+
+        /*if (taskItem.dueTime() != null){
             val dueTime = itemView.findViewById<TextView>(R.id.dueTime)
             dueTime.text = timeFormat.format(taskItem.dueTime())
         }else{
             val dueTime = itemView.findViewById<TextView>(R.id.dueTime)
             dueTime.text = ""
-        }
+        }*/
     }
 }

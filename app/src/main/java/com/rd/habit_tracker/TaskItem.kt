@@ -16,7 +16,8 @@ import java.util.*
 class TaskItem(
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "desc") var desc: String,
-    @ColumnInfo(name = "dueTimeString") var dueTimeString: String?,
+    @ColumnInfo(name = "startDateString") var startDateString: String?,
+    @ColumnInfo(name = "endDateString") var endDateString: String?,
     @ColumnInfo(name = "completedDateString") var completedDateString: String?,
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 ) {
@@ -24,9 +25,17 @@ class TaskItem(
     fun completedDate(): LocalDate? = if(completedDateString == null) null
     else LocalDate.parse(completedDateString, dateFormatter)
 
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun dueTime(): LocalTime? = if(dueTimeString == null) null
+//    else LocalTime.parse(dueTimeString, timeFormatter)
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun dueTime(): LocalTime? = if(dueTimeString == null) null
-    else LocalTime.parse(dueTimeString, timeFormatter)
+    fun startDate(): LocalDate? = if (startDateString == null) null
+    else LocalDate.parse(startDateString, dateFormatter)
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun endDate(): LocalDate? = if (endDateString == null) null
+    else LocalDate.parse(endDateString, dateFormatter)
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun isCompleted() = completedDate() != null
