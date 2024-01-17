@@ -14,5 +14,6 @@
     <color name="green_700">#30A14E</color>
     <color name="grey_200">#EAECEF</color>
     <color name="grey_700">#686868</color>
+    <color name="orange">#FF4500</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>
